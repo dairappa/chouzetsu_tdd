@@ -1,12 +1,12 @@
 {
-  "name": "chouzetsu_tdd_ts",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@types/bun": "^1.1.6"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+	"name": "chouzetsu_tdd_ts",
+	"module": "index.ts",
+	"type": "module",
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/bun": "^1.1.6"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
 }
