@@ -1,16 +1,18 @@
 export class NumberConverter {
 	convert(input: number): string {
-		if (input % 3 === 0) {
-			if (input % 5 === 0) {
-				return "FizzBuzz";
-			}
+		const isDivisibleBy3 = input % 3 === 0;
+		const isDivisibleBy5 = input % 5 === 0;
 
+		if (isDivisibleBy3 && isDivisibleBy5) {
+			return "FizzBuzz";
+		}
+		if (isDivisibleBy3) {
 			return "Fizz";
 		}
-
-		if (input % 5 === 0) {
+		if (isDivisibleBy5) {
 			return "Buzz";
 		}
+
 		return input.toString();
 	}
 }
