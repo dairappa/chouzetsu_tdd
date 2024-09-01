@@ -8,4 +8,5 @@ test("test", () => {
 	expect(fizzbuzz.convert(3)).toBe("Fizz");
 	expect(fizzbuzz.convert(4)).toBe("4");
 	expect(fizzbuzz.convert(5)).toBe("Buzz");
+	expect(fizzbuzz.convert(15)).toBe("FizzBuzz");
 });
