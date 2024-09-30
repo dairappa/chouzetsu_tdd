@@ -28,9 +28,10 @@ test("convert with multiple rules", () => {
 
 
 	const fizzRule = new TestRule();
-	spyOn(fizzRule, "replace").mockImplementation((i) => "fizz");
+	spyOn(fizzRule, "replace").mockImplementation((i) => i === 1 ? "fizz" : "");
+	
 	const BuzzRule = new TestRule();
-	spyOn(BuzzRule, "replace").mockImplementation((i) => "buzz");
+	spyOn(BuzzRule, "replace").mockImplementation((i) => i === 1 ? "buzz" : "");
 	const fizzbuzz = new NumberConverter(
 		[
 			fizzRule,
