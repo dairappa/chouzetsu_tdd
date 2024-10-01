@@ -47,10 +47,10 @@ test("convert with multiple rules", () => {
 
 test("fizz buzz rule", () => {
 	const fizzRule = new TestRule();
-	spyOn(fizzRule, "replace").mockImplementation((i) => i === 3 ? "fizz" : "");
+	spyOn(fizzRule, "replace").mockImplementation((i) => i % 3 === 0 ? "fizz" : "");
 
 	const buzzRule = new TestRule();
-	spyOn(buzzRule, "replace").mockImplementation((i) => i === 5 ? "buzz" : "");
+	spyOn(buzzRule, "replace").mockImplementation((i) => i % 5 === 0 ? "buzz" : "");
 
 	const passThroughRule = new TestRule();
 	spyOn(passThroughRule, "replace").mockImplementation((i) => i.toString());
