@@ -1,5 +1,7 @@
 import { test, expect, spyOn } from "bun:test";
 import { NumberConverter, type ReplaceRuleInterface } from "./NumberConverter";
+import { CyclicNumberRule } from "./rules/CyclicNumberRule";
+import { PassThroughRule } from "./rules/PassThroughRule";
 
 class TestRule implements ReplaceRuleInterface {
 	replace(number: number): string {
@@ -46,18 +48,15 @@ test("convert with multiple rules", () => {
 });
 
 test("fizz buzz rule", () => {
-	const fizzRule = new TestRule();
-	spyOn(fizzRule, "replace").mockImplementation((i) => i % 3 === 0 ? "fizz" : "");
+	const fizzbuzz = new NumberConverter(
+		[
+			new CyclicNumberRule(3, "Fizz"), 
+			new CyclicNumberRule(5, "buzz"), 
+			new PassThroughRule()
+		]
+	);
 
-	const buzzRule = new TestRule();
-	spyOn(buzzRule, "replace").mockImplementation((i) => i % 5 === 0 ? "buzz" : "");
-
-	const passThroughRule = new TestRule();
-	spyOn(passThroughRule, "replace").mockImplementation((i) => i.toString());
-
-	const fizzbuzz = new NumberConverter([fizzRule, buzzRule, passThroughRule]);
-
-	expect(fizzbuzz.convert(3)).toBe("fizz");
+	expect(fizzbuzz.convert(3)).toBe("Fizz");
 	expect(fizzbuzz.convert(5)).toBe("buzz");
 	expect(fizzbuzz.convert(15)).toBe("fizzbuzz");
 	expect(fizzbuzz.convert(1)).toBe("1");
