@@ -1,5 +1,6 @@
 export interface ReplaceRuleInterface {
-	replace: (input: number) => string;
+	apply: (carry: string, input: number) => string;
+	match: (carry: string, input: number) => boolean;
 }
 
 export class NumberConverter {
@@ -7,8 +8,8 @@ export class NumberConverter {
 
 	convert(input: number): string {
 		const result = this.rules.reduce((acc, rule) => {
-			const replacement = rule.replace(input);
-			return acc + replacement;
+			const replacement = rule.match(acc, input) ? rule.apply(acc, input) : "";
+			return replacement;
 		}, "");
 		return result;
 	}
