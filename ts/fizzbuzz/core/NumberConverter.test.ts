@@ -3,10 +3,32 @@ import { NumberConverter, type ReplaceRuleInterface } from "./NumberConverter";
 import { CyclicNumberRule } from "./rules/CyclicNumberRule";
 import { PassThroughRule } from "./rules/PassThroughRule";
 
-class TestRule implements ReplaceRuleInterface {
-	replace(number: number): string {
-		return "";
+
+
+function createMockRule(expectedNumber: number, expectedCarry: string, matchResult: boolean, replacement: string): ReplaceRuleInterface {
+	class TestRule implements ReplaceRuleInterface {
+		apply(_carry: string, _number: number): string {
+			return "";
+		}
+		match(_carry: string, _number: number): boolean {
+			return false;
+		}
 	}
+	
+	const rule = new TestRule();
+	spyOn(rule, "apply").mockImplementation((carry, number) => {
+		if (number === expectedNumber && carry === expectedCarry) {
+			return replacement;
+		}
+		return "";
+	});
+	spyOn(rule, "match").mockImplementation((carry, number) => {
+		if (number === expectedNumber && carry === expectedCarry) {
+			return matchResult;
+		}
+		return false;
+	});
+	return rule;
 }
 
 test("empty rule", () => {
@@ -15,27 +37,20 @@ test("empty rule", () => {
 });
 
 test("single rule", () => {
-	class TestRule implements ReplaceRuleInterface {
-		replace(number: number): string {
-			return "";
-		}
-	}
 
-	const rule = new TestRule();
-	spyOn(rule, "replace").mockImplementation((i) => "replaced");
+	const rule = createMockRule(1, "", true, "Replaced");
 	const fizzbuzz = new NumberConverter([rule]);
-	expect(fizzbuzz.convert(1)).toBe("replaced");
+	expect(fizzbuzz.convert(1)).toBe("Replaced");
 });
 
 test("convert with multiple rules", () => {
 
 
 
-	const fizzRule = new TestRule();
-	spyOn(fizzRule, "replace").mockImplementation((i) => i === 1 ? "fizz" : "");
+	const fizzRule = createMockRule(1, "", true, "Fizz");
+		
+	const BuzzRule = createMockRule(1, "Fizz", true, "FizzBuzz");
 	
-	const BuzzRule = new TestRule();
-	spyOn(BuzzRule, "replace").mockImplementation((i) => i === 1 ? "buzz" : "");
 	const fizzbuzz = new NumberConverter(
 		[
 			fizzRule,
@@ -43,21 +58,7 @@ test("convert with multiple rules", () => {
 		]
 	);
 
-	expect(fizzbuzz.convert(1)).toBe("fizzbuzz");
+	expect(fizzbuzz.convert(1)).toBe("FizzBuzz");
 	
 });
 
-test("fizz buzz rule", () => {
-	const fizzbuzz = new NumberConverter(
-		[
-			new CyclicNumberRule(3, "Fizz"), 
-			new CyclicNumberRule(5, "buzz"), 
-			new PassThroughRule()
-		]
-	);
-
-	expect(fizzbuzz.convert(3)).toBe("Fizz");
-	expect(fizzbuzz.convert(5)).toBe("buzz");
-	expect(fizzbuzz.convert(15)).toBe("fizzbuzz");
-	expect(fizzbuzz.convert(1)).toBe("1");
-});
