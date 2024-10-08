@@ -47,13 +47,12 @@ test("convert with multiple rules", () => {
 
 
 
-	const fizzRule = createMockRule(1, "", true, "Fizz");
 		
 	const BuzzRule = createMockRule(1, "Fizz", true, "FizzBuzz");
 	
 	const fizzbuzz = new NumberConverter(
 		[
-			fizzRule,
+			(createMockRule(1, "", true, "Fizz")),
 			BuzzRule,
 		]
 	);
@@ -62,3 +61,15 @@ test("convert with multiple rules", () => {
 	
 });
 
+test("convert with skip rule", () => {
+	
+	const fizzbuzz = new NumberConverter(
+		[
+			(createMockRule(1, "", false, "Fizz")),
+			(createMockRule(1, "", false, "Buzz")),
+			(createMockRule(1, "", true, "1")),
+		]
+	);
+
+	expect(fizzbuzz.convert(1)).toBe("1");
+});
