@@ -44,16 +44,10 @@ test("single rule", () => {
 });
 
 test("convert with multiple rules", () => {
-
-
-
-		
-	const BuzzRule = createMockRule(1, "Fizz", true, "FizzBuzz");
-	
 	const fizzbuzz = new NumberConverter(
 		[
 			(createMockRule(1, "", true, "Fizz")),
-			BuzzRule,
+			(createMockRule(1, "Fizz", true, "FizzBuzz")),
 		]
 	);
 
@@ -72,4 +66,39 @@ test("convert with skip rule", () => {
 	);
 
 	expect(fizzbuzz.convert(1)).toBe("1");
+});
+
+test("convert with skip rule2", () => {
+	
+	const fizzbuzz = new NumberConverter(
+		[
+			(createMockRule(1, "", true, "Fizz")),
+			(createMockRule(1, "", false, "Buzz")),
+		]
+	);
+
+	expect(fizzbuzz.convert(1)).toBe("Fizz");
+});
+
+test("fizz buzz", () => {
+	const fizzbuzz = new NumberConverter([
+		new CyclicNumberRule(3, "Fizz"),
+		new CyclicNumberRule(5, "Buzz"),
+		new PassThroughRule(),
+	]);
+	expect(fizzbuzz.convert(1)).toBe("1");
+	expect(fizzbuzz.convert(2)).toBe("2");
+	expect(fizzbuzz.convert(3)).toBe("Fizz");
+	expect(fizzbuzz.convert(4)).toBe("4");
+	expect(fizzbuzz.convert(5)).toBe("Buzz");
+	expect(fizzbuzz.convert(6)).toBe("Fizz");
+	expect(fizzbuzz.convert(7)).toBe("7");
+	expect(fizzbuzz.convert(8)).toBe("8");
+	expect(fizzbuzz.convert(9)).toBe("Fizz");
+	expect(fizzbuzz.convert(10)).toBe("Buzz");
+	expect(fizzbuzz.convert(11)).toBe("11");
+	expect(fizzbuzz.convert(12)).toBe("Fizz");
+	expect(fizzbuzz.convert(13)).toBe("13");
+	expect(fizzbuzz.convert(14)).toBe("14");
+	expect(fizzbuzz.convert(15)).toBe("FizzBuzz");
 });

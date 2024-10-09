@@ -8,7 +8,7 @@ export class NumberConverter {
 
 	convert(input: number): string {
 		const result = this.rules.reduce((acc, rule) => {
-			const replacement = rule.match(acc, input) ? rule.apply(acc, input) : "";
+			const replacement = rule.match(acc, input) ? rule.apply(acc, input) : acc;
 			return replacement;
 		}, "");
 		return result;

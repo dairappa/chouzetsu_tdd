@@ -4,7 +4,7 @@ import { CyclicNumberRule } from "./CyclicNumberRule";
 test("apply", () => {
 	const rule = new CyclicNumberRule(3, "Buzz");
 	expect(rule.apply("", 3)).toBe("Buzz");
-    expect(rule.apply("Fizz", 3)).toBe("FizzBuzz");
+    expect(rule.apply("Fizz", 6)).toBe("FizzBuzz");
 });
 
 test("match", () => {
