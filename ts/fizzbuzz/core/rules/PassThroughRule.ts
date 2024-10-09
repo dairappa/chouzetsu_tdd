@@ -1,8 +1,13 @@
 import type { ReplaceRuleInterface } from "../NumberConverter";
 
 class PassThroughRule implements ReplaceRuleInterface {
-	replace(number: number): string {
+	
+	apply(carry: string, number: number): string {
 		return number.toString();
+	}
+
+	match(carry: string, number: number): boolean {
+		return carry === "";
 	}
 }
 
