@@ -20,9 +20,12 @@ fn main() {
         )
         .get_matches();
 
-    let text = _matches.value_of("text").unwrap();
+    let text = _matches.values_of_lossy("text").unwrap();
     let omit_newline = _matches.is_present("omit_newline");
 
-    println!("{}", text);
+    let ending = if omit_newline { "" } else { "\n" };
+    
+    println!("{}{}", text.join(" "), ending);
+    
 
 }
