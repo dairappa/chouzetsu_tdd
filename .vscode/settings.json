@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./rs/echor/Cargo.toml",
+        "./rs/hello/Cargo.toml"
+    ]
+}
