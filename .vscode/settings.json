@@ -1,6 +1,7 @@
 {
-    "rust-analyzer.linkedProjects": [
-        "./rs/echor/Cargo.toml",
-        "./rs/hello/Cargo.toml"
-    ]
+	"rust-analyzer.linkedProjects": [
+		"./rs/echor/Cargo.toml",
+		"./rs/hello/Cargo.toml",
+		"./rs/catr/Cargo.toml"
+	]
 }
